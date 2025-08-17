@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baccarat Dealer Training</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>Baccarat Dealer Training</h1>
+            <div class="game-stats">
+                <div class="shoe-info">
+                    <span>Cards Left: <span id="cards-left">416</span></span>
+                    <span id="shuffle-warning" class="shuffle-warning hidden">⚠️ One more hand before shuffle</span>
+                </div>
+                <div class="score-info">
+                    <span>Correct: <span id="correct-count">0</span></span>
+                    <span>Wrong: <span id="wrong-count">0</span></span>
+                </div>
+            </div>
+        </header>
+
+        <main class="game-board">
+            <div class="table-layout">
+                <div class="player-area">
+                    <h2>Player</h2>
+                    <div class="card-area" id="player-cards">
+                    </div>
+                    <div class="hand-value">
+                        <span>Total: <span id="player-total">0</span></span>
+                    </div>
+                </div>
+
+                <div class="banker-area">
+                    <h2>Banker</h2>
+                    <div class="card-area" id="banker-cards">
+                    </div>
+                    <div class="hand-value">
+                        <span>Total: <span id="banker-total">0</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="center-area">
+                <div class="dealer-controls">
+                    <div id="player-decision" class="decision-prompt hidden">
+                        <h3>Player Decision</h3>
+                        <p>Should the Player take a third card?</p>
+                        <button id="player-hit" class="action-btn hit-btn">Hit</button>
+                        <button id="player-stand" class="action-btn stand-btn">Stand</button>
+                    </div>
+
+                    <div id="banker-decision" class="decision-prompt hidden">
+                        <h3>Banker Decision</h3>
+                        <p>Should the Banker take a third card?</p>
+                        <button id="banker-hit" class="action-btn hit-btn">Hit</button>
+                        <button id="banker-stand" class="action-btn stand-btn">Stand</button>
+                    </div>
+
+                    <div id="hand-result" class="hand-result hidden">
+                        <h3 id="winner-text">Winner: Player</h3>
+                        <button id="next-hand" class="action-btn next-btn">Next Hand</button>
+                    </div>
+
+                    <div id="feedback" class="feedback hidden">
+                        <h4 id="feedback-title">Incorrect!</h4>
+                        <p id="feedback-text">The correct action was to stand because...</p>
+                        <button id="continue-btn" class="action-btn">Continue</button>
+                    </div>
+                </div>
+
+                <div class="shoe-visual">
+                    <div class="shoe">
+                        <div class="shoe-marker" id="shoe-marker"></div>
+                        <div class="shoe-cards" id="shoe-cards"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="game-footer">
+            <button id="shuffle-btn" class="action-btn shuffle-btn" disabled>Shuffle Cards</button>
+            <button id="new-game-btn" class="action-btn">New Game</button>
+            <div class="rules-toggle">
+                <button id="rules-btn" class="action-btn">Show Rules</button>
+            </div>
+        </footer>
+    </div>
+
+    <div id="rules-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Baccarat Rules</h2>
+            <div class="rules-content">
+                <h3>Hand Values</h3>
+                <p>Ace is 1; Ten, Jack, Queen, and King are 0. Add the cards and drop the 10s digit for a value between 0-9</p>
+                
+                <h3>Rules to take a 3rd card (follow in order)</h3>
+                <ol>
+                    <li>If either Player or Banker has an 8 or 9 the hand is over</li>
+                    <li>If Player has a 0-5 they draw, otherwise they stand</li>
+                    <li>If Banker has a 0-2 they draw, if they have a 7 they stand</li>
+                    <li>If Player stood on a 2 card 6 or 7 then Banker draws on 3, 4, or 5 and stands on 6</li>
+                    <li>Otherwise Banker's decision depends on a combination of the Banker's total and the Player's 3rd card:
+                        <ul>
+                            <li>Banker 3 draws unless Player's 3rd card is 8</li>
+                            <li>Banker 4 draws if Player's 3rd card is 2, 3, 4, 5, 6 or 7</li>
+                            <li>Banker 5 draws if Player's 3rd card is 4, 5, 6, or 7</li>
+                            <li>Banker 6 draws if Player's 3rd card is 6 or 7</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

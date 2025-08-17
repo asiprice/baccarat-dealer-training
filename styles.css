@@ -1,0 +1,600 @@
+:root {
+    --primary-green: #0f5132;
+    --secondary-green: #146c43;
+    --accent-gold: #ffd700;
+    --text-light: #ffffff;
+    --text-dark: #000000;
+    --card-width: 80px;
+    --card-height: 112px;
+    --border-radius: 8px;
+    --transition: 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+    min-height: 100vh;
+    color: var(--text-light);
+}
+
+.game-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(10px);
+}
+
+.game-header h1 {
+    font-size: 2.5rem;
+    color: var(--accent-gold);
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.game-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.shoe-info, .score-info {
+    display: flex;
+    gap: 15px;
+    font-size: 1.1rem;
+}
+
+.shuffle-warning {
+    color: var(--accent-gold);
+    font-weight: bold;
+    animation: pulse 1s infinite;
+}
+
+.shuffle-warning.hidden {
+    display: none;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.game-board {
+    flex: 1;
+    padding: 20px;
+}
+
+.table-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 30px;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+}
+
+.banker-area, .player-area {
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(5px);
+}
+
+.banker-area h2, .player-area h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: var(--accent-gold);
+}
+
+.card-area {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 15px;
+    min-height: calc(var(--card-height) + 20px);
+    align-items: center;
+    width: 100%;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-slot {
+    width: var(--card-width);
+    height: var(--card-height);
+    position: relative;
+    flex-shrink: 0;
+}
+
+.card {
+    width: var(--card-width);
+    height: var(--card-height);
+    border-radius: 6px;
+    position: relative;
+    transition: all var(--transition);
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.card.face-down {
+    background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%);
+    border: 2px solid var(--accent-gold);
+}
+
+.card.face-down::before {
+    content: '♠♥♦♣';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    font-size: 20px;
+    color: var(--accent-gold);
+    opacity: 0.5;
+}
+
+.card.face-up {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    position: relative;
+    overflow: visible;
+    padding: 0;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 0;
+    background: transparent;
+    display: block;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card.face-up:has(.card-image) {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+/* Fallback styles when images don't load */
+.card.face-up:not(:has(img)), .card.face-up:has(img[style*="display: none"]) {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card.red {
+    color: #dc2626;
+}
+
+.card.black {
+    color: #1f2937;
+}
+
+.card-corner {
+    position: absolute;
+    font-weight: bold;
+    line-height: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-corner.top-left {
+    top: 3px;
+    left: 3px;
+    font-size: 11px;
+}
+
+.card-corner.bottom-right {
+    bottom: 3px;
+    right: 3px;
+    transform: rotate(180deg);
+    font-size: 11px;
+}
+
+.card-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.card-pips {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    padding: 12px 8px;
+    align-items: center;
+    justify-items: center;
+}
+
+.pip {
+    font-size: 12px;
+    line-height: 1;
+}
+
+.face-card {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.card.red .face-card.jack::before {
+    content: "♛";
+    font-size: 32px;
+    display: block;
+    margin-bottom: 2px;
+    color: #dc2626;
+}
+
+.card.black .face-card.jack::before {
+    content: "♛";
+    font-size: 32px;
+    display: block;
+    margin-bottom: 2px;
+    color: #1f2937;
+}
+
+.card.red .face-card.queen::before {
+    content: "♕";
+    font-size: 32px;
+    display: block;
+    margin-bottom: 2px;
+    color: #dc2626;
+}
+
+.card.black .face-card.queen::before {
+    content: "♕";
+    font-size: 32px;
+    display: block;
+    margin-bottom: 2px;
+    color: #1f2937;
+}
+
+.card.red .face-card.king::before {
+    content: "♔";
+    font-size: 32px;
+    display: block;
+    margin-bottom: 2px;
+    color: #dc2626;
+}
+
+.card.black .face-card.king::before {
+    content: "♔";
+    font-size: 32px;
+    display: block;
+    margin-bottom: 2px;
+    color: #1f2937;
+}
+
+.ace-large {
+    font-size: 36px;
+    text-align: center;
+}
+
+
+.hand-value {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--accent-gold);
+}
+
+.center-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.dealer-controls {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.decision-prompt, .hand-result, .feedback {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--accent-gold);
+    max-width: 300px;
+}
+
+.decision-prompt h3, .hand-result h3, .feedback h4 {
+    margin-bottom: 15px;
+    color: var(--accent-gold);
+    font-size: 1.5rem;
+}
+
+.decision-prompt p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.action-btn {
+    background: linear-gradient(135deg, var(--accent-gold) 0%, #ffed4e 100%);
+    color: var(--text-dark);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all var(--transition);
+    margin: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.hit-btn, .stand-btn {
+    min-width: 80px;
+    width: 80px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hit-btn {
+    background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+    color: white;
+}
+
+.stand-btn {
+    background: linear-gradient(135deg, #f44336 0%, #ef5350 100%);
+    color: white;
+}
+
+.next-btn {
+    background: linear-gradient(135deg, #2196f3 0%, #42a5f5 100%);
+    color: white;
+    font-size: 1.2rem;
+    padding: 15px 30px;
+}
+
+.shuffle-btn {
+    background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%);
+    color: white;
+}
+
+.shoe-visual {
+    margin-top: 20px;
+}
+
+.shoe {
+    width: 200px;
+    height: 30px;
+    background: linear-gradient(135deg, #8d6e63 0%, #5d4037 100%);
+    border-radius: 15px;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.shoe-marker {
+    position: absolute;
+    width: 4px;
+    height: 100%;
+    background: var(--accent-gold);
+    border-radius: 2px;
+    right: 25px;
+    box-shadow: 0 0 10px var(--accent-gold);
+}
+
+.shoe-cards {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
+    border-radius: 13px;
+    transition: width var(--transition);
+}
+
+.game-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(10px);
+    flex-wrap: wrap;
+}
+
+.feedback {
+    background: rgba(244, 67, 54, 0.9);
+    border-color: #f44336;
+}
+
+.feedback.correct {
+    background: rgba(76, 175, 80, 0.9);
+    border-color: #4caf50;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    border: 2px solid var(--accent-gold);
+}
+
+.close {
+    color: var(--accent-gold);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.close:hover {
+    opacity: 0.7;
+}
+
+.rules-content h3 {
+    color: var(--accent-gold);
+    margin: 20px 0 10px 0;
+    font-size: 1.3rem;
+}
+
+.rules-content ol, .rules-content ul {
+    margin: 10px 0 10px 20px;
+}
+
+.rules-content li {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.card-animate-deal {
+    animation: dealCard 0.5s ease-out forwards;
+}
+
+.card-animate-flip {
+    animation: flipCard 0.6s ease-in-out forwards;
+}
+
+@keyframes dealCard {
+    from {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes flipCard {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(90deg);
+    }
+    100% {
+        transform: rotateY(0deg);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.hand-result:not(.hidden), .feedback:not(.hidden) {
+    animation: slideIn 0.4s ease-out forwards;
+}
+
+@media (max-width: 768px) {
+    .table-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 20px;
+    }
+    
+    .game-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .game-header h1 {
+        font-size: 2rem;
+    }
+    
+    .decision-prompt, .hand-result, .feedback {
+        max-width: 250px;
+        padding: 20px;
+    }
+    
+    .game-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    :root {
+        --card-width: 60px;
+        --card-height: 84px;
+    }
+}
