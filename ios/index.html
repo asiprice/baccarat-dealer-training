@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Baccarat Training">
+    <title>Baccarat Dealer Training - iOS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="apple-touch-icon" href="../cards/ace_of_spades.png">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>Baccarat Training</h1>
+            <div class="game-stats">
+                <div class="stats-row">
+                    <span class="stat">Cards: <span id="cards-left">416</span></span>
+                    <span class="stat">✓<span id="correct-count">0</span></span>
+                    <span class="stat">✗<span id="wrong-count">0</span></span>
+                </div>
+                <div id="shuffle-warning" class="shuffle-warning hidden">⚠️ One more hand</div>
+            </div>
+        </header>
+
+        <main class="game-board">
+            <!-- Player Area -->
+            <section class="player-section">
+                <div class="player-header">
+                    <h2>Player</h2>
+                    <div class="hand-value">
+                        <span id="player-total">0</span>
+                    </div>
+                </div>
+                <div class="card-area" id="player-cards">
+                    <div class="card-slot"></div>
+                    <div class="card-slot"></div>
+                    <div class="card-slot"></div>
+                </div>
+            </section>
+
+            <!-- Decision Controls -->
+            <section class="decision-section">
+                <div id="player-decision" class="decision-prompt hidden">
+                    <h3>Player Decision</h3>
+                    <p>Should the Player take a third card?</p>
+                    <div class="button-row">
+                        <button id="player-hit" class="action-btn hit-btn">Hit</button>
+                        <button id="player-stand" class="action-btn stand-btn">Stand</button>
+                    </div>
+                </div>
+
+                <div id="banker-decision" class="decision-prompt hidden">
+                    <h3>Banker Decision</h3>
+                    <p>Should the Banker take a third card?</p>
+                    <div class="button-row">
+                        <button id="banker-hit" class="action-btn hit-btn">Hit</button>
+                        <button id="banker-stand" class="action-btn stand-btn">Stand</button>
+                    </div>
+                </div>
+
+                <div id="hand-result" class="hand-result hidden">
+                    <h3 id="winner-text">Winner: Player</h3>
+                    <button id="next-hand" class="action-btn next-btn">Next Hand</button>
+                </div>
+
+                <div id="feedback" class="feedback hidden">
+                    <h4 id="feedback-title">Incorrect!</h4>
+                    <p id="feedback-text">The correct action was to stand because...</p>
+                    <button id="continue-btn" class="action-btn">Continue</button>
+                </div>
+            </section>
+
+            <!-- Banker Area -->
+            <section class="banker-section">
+                <div class="banker-header">
+                    <h2>Banker</h2>
+                    <div class="hand-value">
+                        <span id="banker-total">0</span>
+                    </div>
+                </div>
+                <div class="card-area" id="banker-cards">
+                    <div class="card-slot"></div>
+                    <div class="card-slot"></div>
+                    <div class="card-slot"></div>
+                </div>
+            </section>
+
+            <!-- Shoe Visual -->
+            <section class="shoe-section">
+                <div class="shoe">
+                    <div class="shoe-marker" id="shoe-marker"></div>
+                    <div class="shoe-cards" id="shoe-cards"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="game-footer">
+            <div class="footer-controls">
+                <button id="shuffle-btn" class="control-btn shuffle-btn" disabled>Shuffle</button>
+                <button id="new-game-btn" class="control-btn">New Game</button>
+                <button id="rules-btn" class="control-btn">Rules</button>
+            </div>
+        </footer>
+    </div>
+
+    <div id="rules-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Baccarat Rules</h2>
+            <div class="rules-content">
+                <h3>Hand Values</h3>
+                <p>Ace is 1; Ten, Jack, Queen, and King are 0. Add the cards and drop the 10s digit for a value between 0-9</p>
+                
+                <h3>Rules to take a 3rd card (follow in order)</h3>
+                <ol>
+                    <li>If either Player or Banker has an 8 or 9 the hand is over</li>
+                    <li>If Player has a 0-5 they draw, otherwise they stand</li>
+                    <li>If Banker has a 0-2 they draw, if they have a 7 they stand</li>
+                    <li>If Player stood on a 2 card 6 or 7 then Banker draws on 3, 4, or 5 and stands on 6</li>
+                    <li>Otherwise Banker's decision depends on a combination of the Banker's total and the Player's 3rd card:
+                        <ul>
+                            <li>Banker 3 draws unless Player's 3rd card is 8</li>
+                            <li>Banker 4 draws if Player's 3rd card is 2, 3, 4, 5, 6 or 7</li>
+                            <li>Banker 5 draws if Player's 3rd card is 4, 5, 6, or 7</li>
+                            <li>Banker 6 draws if Player's 3rd card is 6 or 7</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
